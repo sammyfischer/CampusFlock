@@ -11,7 +11,7 @@ function toggleTheme() {
 
 <template>
   <v-btn icon="mdi-theme-light-dark" @click="toggleTheme()"></v-btn>
-  <profile-page></profile-page>
+  <ProfilePage />
 </template>
 
 <style scoped>
