@@ -3,7 +3,7 @@
     <!-- Desktop Sidebar / Navigation Drawer -->
     <v-navigation-drawer
       v-if="!display.mobile"
-      v-model="drawer"  <!-- Bind to a reactive variable -->
+      v-model="drawer"
       permanent
       app
     >
@@ -55,7 +55,8 @@
   </v-app>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { useTheme } from 'vuetify';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
@@ -70,8 +71,27 @@ function navigateTo(route) {
     drawer.value = false; // Close the drawer on mobile after navigation
   }
 }
+
+var theme = useTheme()
+
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
 </script>
 
 <style scoped>
-/* Custom styles if needed */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
 </style>
