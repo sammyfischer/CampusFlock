@@ -35,6 +35,6 @@ function onCancel() {
 
 <style scoped>
 .v-dialog {
-    max-width: 60%;
+    max-width: max(40%, 400px);
 }
 </style>
