@@ -7,6 +7,7 @@ const OrganizerSchema = new Schema({
     profilePic: { type: String },
     description: { type: String },
 });
+
 const Organizer =  mongoose.model('Organizer', OrganizerSchema);
 
 export default Organizer;
