@@ -1,7 +1,11 @@
 <template>
   <v-app>
-    <!-- Desktop Sidebar / Navigation Drawer -->
-    <v-navigation-drawer v-if="!display.mobile" v-model="drawer" permanent app>
+    <v-navigation-drawer
+      v-if="!display.mobile"
+      v-model="drawer"
+      permanent
+      app
+    >
       <v-list>
         <v-list-item @click="navigateTo('/home')" link>
           <v-icon>mdi-home</v-icon>
@@ -15,29 +19,42 @@
       </v-list>
     </v-navigation-drawer>
 
-    <!-- Mobile Bottom Navigation Bar -->
-    <v-bottom-navigation v-else app grow :value="false">
-      <v-btn @click="navigateTo('/home')">
+    <v-bottom-navigation
+      v-else
+      app
+      grow
+      v-model="activeTab"
+    >
+      <v-btn @click="navigateTo('/home')" value="/home">
         <span>Home</span>
         <v-icon>mdi-home</v-icon>
       </v-btn>
-      <v-btn @click="navigateTo('/profile')">
+      <v-btn @click="navigateTo('/profile')" value="/profile">
         <span>Profile</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-bottom-navigation>
 
-    <!-- App Bar -->
     <v-app-bar app color="primary" dark>
       <v-toolbar-title>CampusFlock</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        dense
+        flat
+        hide-details
+        solo-inverted
+        placeholder="Search..."
+        append-icon="mdi-magnify"
+        v-model="searchQuery"
+        @keyup.enter="handleSearch"
+      ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn icon="mdi-theme-light-dark" @click="toggleTheme"></v-btn>
     </v-app-bar>
 
-    <!-- Main content area where routed components are displayed -->
     <v-main>
       <v-container>
-        <router-view></router-view> <!-- This renders the active route's component -->
+        <router-view></router-view>
       </v-container>
     </v-main>
 
@@ -48,16 +65,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { RouteLocation, useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useDisplay, useTheme } from 'vuetify';
 import CreateEvent from './components/CreateEvent.vue';
 
 const router = useRouter();
+const route = useRoute();
 const display = useDisplay();
 const theme = useTheme();
 
-const drawer = ref(false); // Define a reactive variable for drawer state
+const drawer = ref(false);
+const activeTab = ref(route.path);
+const searchQuery = ref('');  // Store the search query input
+
+watch(() => route.path, (newPath) => {
+  activeTab.value = newPath;
+});
 const createEventDialog = ref(false)
 
 switch (localStorage['theme']) {
@@ -67,20 +91,30 @@ switch (localStorage['theme']) {
     break;
 }
 
-function navigateTo(route: RouteLocation) {
-  router.push(route);
-  if (display.mobile) {
-    drawer.value = false; // Close the drawer on mobile after navigation
+function navigateTo(route) {
+  // Check if the new route is different from the current one
+  if (route !== router.currentRoute.value.path) {
+    router.push(route);
+    activeTab.value = route; // Only update if the route changes
+    if (display.mobile) {
+      drawer.value = false; // Close the drawer on mobile after navigation
+    }
   }
 }
 
-function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+function handleSearch() {
+  router.push({ name: 'SearchPage', query: { query: searchQuery.value } });
+  // searchQuery.value = ''; // Optionally clear the search field after search;
   localStorage['theme'] = theme.global.name.value;
 }
 
 function onCreateEventClick() {
   createEventDialog.value = true;
+}
+
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+  localStorage['theme'] = theme.global.name.value;
 }
 </script>
 
