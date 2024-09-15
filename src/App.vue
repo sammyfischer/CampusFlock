@@ -40,27 +40,34 @@
         <router-view></router-view> <!-- This renders the active route's component -->
       </v-container>
     </v-main>
+
+    <v-btn fab color="primary" class="floating-button" @click="onCreateEventClick()" icon="mdi-plus" />
+
+    <CreateEvent v-model="createEventDialog" />
   </v-app>
 </template>
 
 <script setup lang="ts">
-import { useTheme } from 'vuetify';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useDisplay } from 'vuetify';
+import { RouteLocation, useRouter } from 'vue-router';
+import { useDisplay, useTheme } from 'vuetify';
+import CreateEvent from './components/CreateEvent.vue';
 
 const router = useRouter();
 const display = useDisplay();
+const theme = useTheme();
+
 const drawer = ref(false); // Define a reactive variable for drawer state
-const theme = useTheme()
+const createEventDialog = ref(false)
 
 switch (localStorage['theme']) {
   case 'light':
   case 'dark':
     theme.global.name.value = localStorage['theme'];
+    break;
 }
 
-function navigateTo(route) {
+function navigateTo(route: RouteLocation) {
   router.push(route);
   if (display.mobile) {
     drawer.value = false; // Close the drawer on mobile after navigation
@@ -68,7 +75,12 @@ function navigateTo(route) {
 }
 
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+  localStorage['theme'] = theme.global.name.value;
+}
+
+function onCreateEventClick() {
+  createEventDialog.value = true;
 }
 </script>
 
@@ -86,5 +98,12 @@ function toggleTheme() {
 
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+
+.floating-button {
+  position: fixed;
+  right: 20px;
+  bottom: 80px;
+  z-index: 100;
 }
 </style>
