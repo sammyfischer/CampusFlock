@@ -1,24 +1,13 @@
 <template>
   <v-container>
-    <h1>Upcoming Events</h1>
+    <h1 class="mb-2">Upcoming Events</h1>
     <v-row>
-      <v-col cols="12" sm="6" md="4" v-for="event in sortedEvents" :key="event._id">
-        <v-card>
-          <v-card-title>{{ event.title }}</v-card-title>
-          <v-card-subtitle>
-            {{ formatDate(event.startTime, { dateOnly: true }) }} | 
-            {{ formatDate(event.startTime) }} - {{ formatDate(event.endTime) }}
-            <br>
-            Organized by: {{ event.organizerName }}
-          </v-card-subtitle>
-          <v-card-text>{{ event.description }}</v-card-text>
-          <v-card-actions>
-            <v-btn color="blue darken-1" text @click="openDialog(event)">
-              Learn More
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
+      <EventCard
+        v-for="event in sortedEvents"
+        :key="event._id"
+        :event="event"
+        @open="openDialog"
+      />
     </v-row>
 
     <!-- Dialog for Event Details -->
@@ -46,6 +35,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import EventCard from '@/components/EventCard.vue';  // Adjust path if necessary
 import events from '@/data/events.json';
 import organizers from '@/data/organizers.json';
 
@@ -62,7 +52,7 @@ function formatDate(isoString, options = {}) {
 }
 
 function openDialog(event) {
-  currentEvent.value = event; // Also include organizer details when loaded
+  currentEvent.value = {...event, organizerName: organizers[event.userID]?.username || 'Unknown Organizer'};
   dialog.value = true;
 }
 

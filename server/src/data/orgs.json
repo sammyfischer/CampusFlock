@@ -1,0 +1,72 @@
+[
+  {
+    "userID": "studentUnion",
+    "name": "Student Union",
+    "email": "student.union@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "The central body representing the interests and events of the student community."
+  },
+  {
+    "userID": "csClub",
+    "name": "CS Club",
+    "email": "cs.club@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "A hub for computer science students to innovate, learn, and collaborate on various tech projects."
+  },
+  {
+    "userID": "intlStudentsAssoc",
+    "name": "International Students Association",
+    "email": "intl.students@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "Celebrates and supports the diverse cultural background of our campus community."
+  },
+  {
+    "userID": "ecoClub",
+    "name": "Eco Club",
+    "email": "eco.club@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "Focused on promoting sustainability and environmental awareness on campus."
+  },
+  {
+    "userID": "careerServices",
+    "name": "Career Services",
+    "email": "career.services@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "Provides career guidance, job placement services, and networking opportunities."
+  },
+  {
+    "userID": "healthWellness",
+    "name": "Health and Wellness Center",
+    "email": "health.wellness@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "Offers resources and support for physical and mental health on campus."
+  },
+  {
+    "userID": "athleticsDept",
+    "name": "Athletics Department",
+    "email": "athletics.dept@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "Organizes sports events and maintains athletic facilities at the university."
+  },
+  {
+    "userID": "filmSociety",
+    "name": "Film Society",
+    "email": "film.society@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "A community for film aficionados to watch, discuss, and appreciate cinema."
+  },
+  {
+    "userID": "businessClub",
+    "name": "Business Club",
+    "email": "business.club@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "Encourages entrepreneurship and business skills among students."
+  },
+  {
+    "userID": "artsCollective",
+    "name": "Arts Collective",
+    "email": "arts.collective@example.com",
+    "profilePic": "defaultProfilePic.png",
+    "description": "A creative space for artists to showcase their work and engage with the arts."
+  }
+]
