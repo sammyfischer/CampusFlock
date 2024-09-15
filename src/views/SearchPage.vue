@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Search Results for "{{ $route.query.query }}"</h1>
+    <h1 class="mb-2">Search Results for "{{ $route.query.query }}"</h1>
     <v-row>
       <EventCard
         v-for="event in filteredEvents"

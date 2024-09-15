@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Upcoming Events</h1>
+    <h1 class="mb-2">Upcoming Events</h1>
     <v-row>
       <EventCard
         v-for="event in sortedEvents"

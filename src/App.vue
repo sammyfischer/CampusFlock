@@ -36,20 +36,23 @@
     </v-bottom-navigation>
 
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title>CampusFlock</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-text-field
-        dense
-        flat
-        hide-details
-        solo-inverted
-        placeholder="Search..."
-        append-icon="mdi-magnify"
-        v-model="searchQuery"
-        @keyup.enter="handleSearch"
-      ></v-text-field>
-      <v-spacer></v-spacer>
-      <v-btn icon="mdi-theme-light-dark" @click="toggleTheme"></v-btn>
+      <v-row class="d-flex align-center">
+
+        <v-col cols="4">
+          <v-toolbar-title class="ma-4" @click="navigateTo('/home')"style="cursor:pointer;">CampusFlock</v-toolbar-title>
+        </v-col>
+
+        <v-col cols="4" class="d-flex justify-center">
+          <v-text-field dense flat hide-details solo-inverted placeholder="Search..." append-icon="mdi-magnify"
+            v-model="searchQuery" @keyup.enter="handleSearch" @click:append="handleSearch"
+            class="search-bar d-flex-inline justify-self-center"></v-text-field>
+        </v-col>
+
+        <v-col cols="4" class="d-flex justify-end">
+          <v-btn icon="mdi-theme-light-dark" @click="toggleTheme" class="ma-4"></v-btn>
+        </v-col>
+
+      </v-row>
     </v-app-bar>
 
     <v-main>
