@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <!-- Desktop Sidebar / Navigation Drawer -->
     <v-navigation-drawer
       v-if="!display.mobile"
       v-model="drawer"
@@ -24,74 +23,79 @@
       </v-list>
     </v-navigation-drawer>
 
-    <!-- Mobile Bottom Navigation Bar -->
     <v-bottom-navigation
       v-else
       app
       grow
-      :value="false"
+      v-model="activeTab"
     >
-      <v-btn @click="navigateTo('/home')">
+      <v-btn @click="navigateTo('/home')" value="/home">
         <span>Home</span>
         <v-icon>mdi-home</v-icon>
       </v-btn>
-      <v-btn @click="navigateTo('/profile')">
+      <v-btn @click="navigateTo('/profile')" value="/profile">
         <span>Profile</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-bottom-navigation>
 
-    <!-- App Bar -->
     <v-app-bar app color="primary" dark>
       <v-toolbar-title>CampusFlock</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        dense
+        flat
+        hide-details
+        solo-inverted
+        placeholder="Search..."
+        append-icon="mdi-magnify"
+        v-model="searchQuery"
+        @keyup.enter="handleSearch"
+      ></v-text-field>
     </v-app-bar>
 
-    <!-- Main content area where routed components are displayed -->
     <v-main>
       <v-container>
-        <router-view></router-view> <!-- This renders the active route's component -->
+        <router-view></router-view>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
-<script setup lang="ts">
-import { useTheme } from 'vuetify';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+<script setup>
+import { ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useDisplay } from 'vuetify';
 
 const router = useRouter();
+const route = useRoute();
 const display = useDisplay();
-const drawer = ref(false); // Define a reactive variable for drawer state
+const drawer = ref(false);
+const activeTab = ref(route.path);
+const searchQuery = ref('');  // Store the search query input
+
+watch(() => route.path, (newPath) => {
+  activeTab.value = newPath;
+});
 
 function navigateTo(route) {
-  router.push(route);
-  if (display.mobile) {
-    drawer.value = false; // Close the drawer on mobile after navigation
+  // Check if the new route is different from the current one
+  if (route !== router.currentRoute.value.path) {
+    router.push(route);
+    activeTab.value = route; // Only update if the route changes
+    if (display.mobile) {
+      drawer.value = false; // Close the drawer on mobile after navigation
+    }
   }
 }
 
-var theme = useTheme()
-
-function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+function handleSearch() {
+  router.push({ name: 'SearchPage', query: { query: searchQuery.value } });
+  // searchQuery.value = ''; // Optionally clear the search field after search
 }
+
 </script>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+<style>
+/* Additional global styles if needed */
 </style>
