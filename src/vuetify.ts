@@ -14,7 +14,7 @@ const lightTheme: ThemeDefinition = {
 const darkTheme: ThemeDefinition = {
     colors: {
         background: '#121212',
-        primary: '#BB86FC',
+        primary: '#d65f1e',
     },
 }
 

@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useDisplay } from 'vuetify';
 import InterestsEditor from '../components/settings/InterestsEditor.vue'
 import ProfileEditor from '../components/settings/ProfileEditor.vue';
+
+const { mobile, mdAndUp, smAndUp } = useDisplay();
 </script>
 
 <template>
@@ -8,6 +11,7 @@ import ProfileEditor from '../components/settings/ProfileEditor.vue';
         <v-card>
             <v-card-title>My Profile</v-card-title>
             <v-card-text>
+
                 <v-row>
                     <v-col class="pa-4" cols="auto">
                         <v-row>
@@ -18,14 +22,17 @@ import ProfileEditor from '../components/settings/ProfileEditor.vue';
                                 <h3>Firstname Lastname</h3>
                             </v-col>
                         </v-row>
-                    </v-col>
-                    <v-divider class="ma-5" vertical />
+                    </v-col md="12">
+
+                    <v-divider v-if="smAndUp" class="ma-5" vertical />
+
                     <v-col>
                         <h1>Settings</h1>
                         <ProfileEditor />
                         <InterestsEditor />
                     </v-col>
                 </v-row>
+
             </v-card-text>
         </v-card>
     </v-container>
